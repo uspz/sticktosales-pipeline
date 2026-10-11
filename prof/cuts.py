@@ -12,7 +12,7 @@ P = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))  # raiz do repo
 YEL = '#FFD21F'
 
 # cortes: (bloco inicial, bloco final)
-CUTS = {'dicas': (1, 4), 'exemplo': (5, 7)}
+CUTS = {'dicas': (1, 4), 'exemplo': (5, 7), 'aula': (0, 8)}
 
 HOOKS = {
     11: {'dicas': {'PT': '3 truques pro seu preço *não* *parecer* *caro*',
@@ -105,7 +105,7 @@ def draw_hook(c, txt, tr):
 
 def draw_endcard(c, txt, tr, dur):
     t0 = dur - 2.6
-    if tr < t0: return
+    if not txt or tr < t0: return
     k = sstep((tr - t0) / 0.3)
     pop = 1.0 + 0.12 * math.sin(math.pi * clamp((tr - t0) / 0.35, 0, 1))
     c.save(); c.translate(W / 2, 1805); c.scale(pop, pop)
@@ -116,12 +116,16 @@ def draw_endcard(c, txt, tr, dur):
 
 
 def setup(n, lang, cut):
-    mod = importlib.import_module(f'lesson{n}')
+    if n >= 14:
+        import lessongen
+        mod = lessongen.module_for(n)
+    else:
+        mod = importlib.import_module(f'lesson{n}')
     al = json.load(open(al_path(n, lang)))
     pf, poses = mod.build(lang, al)
     i0, i1 = CUTS[cut]
     bl = al['blocks']
-    a = bl[i0][0] - 0.08
+    a = max(0.0, bl[i0][0] - 0.08)
     b = min(bl[i1][1] + 0.75, bl[i1 + 1][0] - 0.2) if i1 + 1 < len(bl) else al['end'] + 0.6
     blocks_mod = [(-1e9 if k <= i0 else s, e) for k, (s, e) in enumerate(bl)]
     return mod, al, pf, poses, a, b, blocks_mod
@@ -140,7 +144,10 @@ def frame(c, mod, pf, poses, f, blocks_mod, L, end, a, b, hook, endtxt):
 def main():
     mode, n, lang, cut = sys.argv[1], int(sys.argv[2]), sys.argv[3], sys.argv[4]
     mod, al, pf, poses, a, b, blocks_mod = setup(n, lang, cut)
-    L = mod.TXT[lang]; hook = HOOKS[n][cut][lang]; endtxt = ENDCARD[lang]
+    L = mod.TXT[lang]
+    if hasattr(mod, 'CUT_HOOKS'): hook = mod.HOOK if cut == 'aula' else mod.CUT_HOOKS[cut]
+    else: hook = HOOKS[n][cut][lang]
+    endtxt = '' if cut == 'aula' else ENDCARD[lang]
     c = Canvas(W, H)
     if mode == 'still':
         from PIL import Image
