@@ -15,6 +15,12 @@ Vídeos verticais (1080x1920, 30 fps) de dicas de vendas com um professor de bon
 - `add_cover.sh capa.png video.mp4 saida.mp4`: põe a capa de 0,5 s no início. Só para aulas antigas. As aulas novas abrem com o gancho na tela.
 - `add_music.sh video.mp4 saida.mp4 [trilha]`: lo-fi original com ducking. Revezar as trilhas em `trilhas/`. Para criar mais: `python3 lofi2.py saida.wav <seed> <bpm> <prog 0-4> <transpor> <ep|pluck>`.
 
+## Lições 14+ (jeito atual)
+- Cada lição é um `prof/specNN.py` curto: HOOK, CUT_HOOKS, CAP, HT, TITLES, MARKED (texto idêntico ao roteiro + marcas), ITEMS (tipos: t, bar, big, strike, check, bub, stamp, follow, x, ok, arrow, icon) e GROUPS opcional. O motor é `prof/lessongen.py`.
+- Conferir: `python3 lessongen.py stills NN saida.png t1,t2,...` (usa `alinhamentos/alNN_pt.json`).
+- Render: `python3 cuts.py render NN PT <aula|dicas|exemplo> saida.mp4` (a aula abre com o gancho na tela) e depois `add_music.sh` revezando as trilhas.
+- Mídia: copiar para `uspz/sticktosales-midia/loteN/` (repo público) e agendar no Metricool com a URL raw, um post por vídeo com tiktok+instagram+youtube.
+
 ## Conferência antes de publicar
 Extrair frames do meio e do fim de cada bloco (ffmpeg -ss) e olhar. Volume alvo de −13 a −14 LUFS, pico abaixo de −0,4 dB (`ffmpeg -af ebur128=peak=true`). Voz já no primeiro segundo.
 
