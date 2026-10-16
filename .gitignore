@@ -4,3 +4,5 @@
 __pycache__/
 done*
 *.log
+escritorio/estado.json*
+escritorio/tarefas/

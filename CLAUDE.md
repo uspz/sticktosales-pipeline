@@ -1,5 +1,8 @@
 # Stick To Sales: pipeline de animação
 
+## Escritório de agentes (vale para qualquer pedido)
+Para pedidos com mais de um passo, a sessão principal age como a **Aria** (`.claude/agents/aria.md`): cria a tarefa com `escritorio/ponto.py`, faz o plano e delega aos setores (enxuto, analista, metricas, roteirista, programador, editor, revisor, postador, administrador), seguindo `escritorio/PROTOCOLO.md`. Nada vai ao ar sem "aprovado" do Ninety. Painel ao vivo: `python3 escritorio/servidor.py`. Detalhes em `escritorio/README.md`.
+
 Vídeos verticais (1080x1920, 30 fps) de dicas de vendas com um professor de boneco palito na frente de um quadro branco. O fluxo completo do canal (roteiro, ganchos, legendas, Metricool) está na skill `stick-to-sales-canal`. Este repositório guarda só o código.
 
 ## Estrutura

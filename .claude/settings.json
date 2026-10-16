@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      { "hooks": [ { "type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR/escritorio/ponto.py\" hook", "timeout": 5 } ] }
+    ],
+    "PreToolUse": [
+      { "matcher": "Task|Agent", "hooks": [ { "type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR/escritorio/ponto.py\" hook", "timeout": 5 } ] }
+    ],
+    "PostToolUse": [
+      { "matcher": "Task|Agent", "hooks": [ { "type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR/escritorio/ponto.py\" hook", "timeout": 5 } ] }
+    ],
+    "Stop": [
+      { "hooks": [ { "type": "command", "command": "python3 \"$CLAUDE_PROJECT_DIR/escritorio/ponto.py\" hook", "timeout": 5 } ] }
+    ]
+  }
+}
