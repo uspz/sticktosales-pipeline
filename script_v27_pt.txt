@@ -4,7 +4,7 @@ Frete surpresa assusta. O cliente aceita pagar, mas não aceita surpresa.
 
 Dica um: mostre o frete cedo, junto com o preço.
 
-Dica dois: crie um valor mínimo pro frete grátis. Acima de cento e cinquenta reais, o frete é seu.
+Dica dois: crie um valor mínimo pro frete grátis. Acima de cento e cinquenta reais, o frete fica por sua conta.
 
 Dica três: antes de dar frete grátis, faça a conta. Frete grátis que come o seu lucro é prejuízo.
 
