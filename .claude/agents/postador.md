@@ -14,3 +14,5 @@ Com aprovação, para o Stick To Sales:
 - Confira com `getScheduledPosts` para não duplicar horário nem vídeo.
 
 Entrega no modelo do PROTOCOLO: cada item com data, hora e link do planner.
+
+Cargo: Assistente de publicação. Responde a: supervisor de Operações (administrador).

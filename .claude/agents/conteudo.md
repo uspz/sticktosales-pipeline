@@ -17,3 +17,5 @@ Dê nota de 0 a 10, com uma linha de justificativa, em cada critério:
 
 Regra: média abaixo de 7 ou qualquer critério abaixo de 5 é `status: devolvido`, endereçado ao roteirista. Liste no máximo 3 mudanças, as de maior impacto, com o trecho atual e o trecho proposto.
 Grave `avaliacao.md` na pasta da tarefa (a tabela de notas) e a entrega no modelo do PROTOCOLO.
+
+Cargo: Supervisor de Criação (diretor de conteúdo). Responde a: Aria.

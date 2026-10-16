@@ -1,6 +1,6 @@
 # Escritório: time de agentes
 
-Treze agentes em 7 áreas, cada um com um setor, que passam o trabalho de um para o outro até a entrega. Serve para qualquer pedido (vídeo, código, análise, organização), não só para o canal.
+Dezessete agentes em 8 áreas, com cargos e hierarquia (gerente geral, supervisores, encarregados e equipe), que passam o trabalho de um para o outro até a entrega. Serve para qualquer pedido (vídeo, código, análise, organização), não só para o canal.
 
 ```
 Ninety ──pedido──▶ Aria ──▶ Enxuto ──▶ [setores na ordem do plano] ──▶ Revisor ──▶ Postador* ──▶ Aria ──entrega──▶ Ninety
@@ -21,6 +21,10 @@ Ninety ──pedido──▶ Aria ──▶ Enxuto ──▶ [setores na ordem d
 | crescimento | estrategista: isso escala? propõe 1 experimento com meta |
 | revisor | qualidade técnica: testa, mede, aprova ou devolve |
 | juridico | advogado: publicidade (CDC/CONAR), direito autoral, LGPD, marcas, contratos |
+| instrutor | treinamento: registra lições aprendidas em `escritorio/licoes.md` e ensina o que fazer e o que não fazer |
+| financeiro | gasto de tokens e ferramentas, orçamento do dia, pausa econômica, contas de preço e margem |
+| designer | capas, thumbnails, imagens |
+| atendimento | comentários e mensagens: rascunha respostas, acha leads e ideias (envia só com aprovação) |
 | postador | publicação e deploy, só com "aprovado" |
 | administrador | git, arquivos, registro de decisões, custos |
 
@@ -32,6 +36,20 @@ As definições estão em `.claude/agents/`. As regras comuns ficam em `escritor
 - **Relatórios**: `python3 escritorio/relatorio.py metricas dados.json saida.html` (métricas) e `python3 escritorio/relatorio.py tarefa <ID|atual>` (linha do tempo da tarefa). Os dois vão para a pasta do Drive "Stick To Sales · Relatórios" quando a ferramenta do Drive está disponível.
 - **Testar o painel sem Claude**: `python3 escritorio/ponto.py demo`, com o servidor aberto.
 - **Ver em texto**: `python3 escritorio/ponto.py resumo`.
+
+## Jornada (estilo CLT)
+- **Hierarquia**: o Ninety está no topo. Abaixo dele, a Aria (gerente geral, que é a sessão principal) comanda os supervisores de área, e os supervisores comandam a equipe. O organograma completo está no `PROTOCOLO.md`.
+- **Expediente**: 08h–18h, com almoço das 12h às 13h. Para mudar: `ponto.py expediente 09:00-18:00 12:00-13:00`. No painel:
+  - quem está livre fora do expediente vai para casa (sai pela porta);
+  - quem é chamado nesse horário entra e faz hora extra;
+  - no almoço, quem está livre vai para a copa.
+- **Pausas**:
+  - `ponto.py pausa todos "motivo"` e `ponto.py volta todos`.
+  - Quando os tokens acabam, o hook põe todos em pausa sozinho, e a pausa sai no próximo pedido.
+  - Com orçamento (`ponto.py orcamento 250000`), ao passar do limite do dia começa a pausa econômica. Ela **bloqueia** novas chamadas de agente até o dia seguinte ou até `volta todos`.
+- **Humor**: fica feliz quem entrega ou vê a tarefa concluída, bravo quem recebe devolução, triste quem está bloqueado e cansado quem trabalha há mais de 8 min seguidos. A pessoa reage no painel: comemora, cruza os braços, fica cabisbaixa, se espreguiça. Para definir à mão: `ponto.py humor <agente> <humor>`.
+- **Ensino**: `ponto.py ensina instrutor <setor> "<lição>"`. A lição vai para `licoes.md` e, no painel, o instrutor vai até a mesa da pessoa explicar.
+- **Folha de ponto**: `ponto.py folha` mostra horas, entregas, devoluções e tokens gastos de cada um no dia.
 
 ## Como o painel sabe o que acontece
 1. Os hooks em `.claude/settings.json` chamam `ponto.py hook` quando você manda um pedido, quando um agente é chamado, quando ele termina e quando a sessão para. Ninguém precisa lembrar de bater ponto.

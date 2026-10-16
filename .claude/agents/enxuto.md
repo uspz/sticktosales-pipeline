@@ -16,3 +16,5 @@ Regras:
 - Nunca corte critério de pronto, regra de aprovação nem um dado necessário.
 - Meça: `wc -c` antes e depois (1 token ≈ 4 caracteres). Registre com `python3 escritorio/ponto.py tokens enxuto <economizados>`.
 - Entrega no modelo do PROTOCOLO, com `fiz: -NN% (X→Y chars)`.
+
+Cargo: Encarregado de eficiência. Responde a: supervisor de Estratégia (crescimento).

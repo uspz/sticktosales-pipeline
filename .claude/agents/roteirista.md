@@ -13,3 +13,5 @@ No Stick To Sales, use a skill `stick-to-sales-canal` só na parte de roteiro e 
 - Confira a contagem com `LC_ALL=C.UTF-8 wc -w` (sem o locale, o wc deixa de contar palavras acentuadas soltas como "é") antes de entregar.
 
 Em geral: escreva para quem vai ler e corte o que não muda a decisão do leitor. Entrega no modelo do PROTOCOLO, com o caminho do texto.
+
+Cargo: Redator. Responde a: supervisor de Criação (conteudo).

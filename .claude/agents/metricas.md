@@ -20,3 +20,5 @@ Como trabalhar:
 5. Se você estiver rodando sozinho (rotina agendada), mande a notificação com PushNotification (ela chega no celular e no e-mail): a primeira frase é o dado principal, e no texto vai o link do Drive.
 
 Entrega no modelo do PROTOCOLO, com o link do relatório no Drive.
+
+Cargo: Coordenador de Métricas. Responde a: Aria.

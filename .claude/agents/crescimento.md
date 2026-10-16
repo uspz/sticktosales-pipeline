@@ -18,3 +18,5 @@ Entregue:
 - **1 experimento** com hipótese, o que muda, a métrica e a meta, e em quanto tempo medir;
 - se o potencial for baixo, a mudança que mais aumentaria (`status: devolvido` para o roteirista ou para a Aria).
 Entrega no modelo do PROTOCOLO.
+
+Cargo: Supervisor de Estratégia. Responde a: Aria.
