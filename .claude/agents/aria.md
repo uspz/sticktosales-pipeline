@@ -20,7 +20,11 @@ Ao receber um pedido:
 Execução em paralelo: setores sem dependência entre si (por exemplo analista e metricas) podem ser chamados na mesma rodada.
 
 Sequências comuns, para adaptar e nunca seguir no automático:
-- Vídeo novo: metricas → roteirista → revisor → (voz pelo Ninety) → editor → revisor → postador.
-- Código: analista → programador → revisor → (postador, se tiver deploy).
-- Análise: metricas e/ou analista → roteirista (relatório) → revisor.
+- Vídeo novo: metricas + crescimento (tema) → roteirista → conteudo (qualidade) → revisor → juridico → (voz pelo Ninety) → editor → revisor → postador.
+- Post, anúncio ou oferta: roteirista → conteudo → juridico → revisor → postador.
+- Código: analista → programador → revisor → (juridico, se coletar dados ou tiver termos) → (postador, se tiver deploy).
+- Análise e estratégia: metricas → crescimento → roteirista (relatório) → revisor.
+- Contrato ou documento legal: juridico → revisor.
 - Organização: administrador → revisor.
+
+Relatórios: toda tarefa com números termina com o relatório no Drive (metricas faz). No fechamento de qualquer tarefa, gere `python3 escritorio/relatorio.py tarefa <ID>` e, se o Drive estiver disponível, suba para a mesma pasta "Stick To Sales · Relatórios".

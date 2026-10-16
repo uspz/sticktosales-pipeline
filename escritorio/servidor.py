@@ -33,6 +33,9 @@ class H(BaseHTTPRequestHandler):
         if p in ("/", "/index.html"):
             with open(PAINEL, "rb") as f:
                 return self._envia(f.read(), "text/html; charset=utf-8")
+        if p == "/vendor/three.min.js":
+            with open(os.path.join(DIR, "vendor", "three.min.js"), "rb") as f:
+                return self._envia(f.read(), "application/javascript")
         if p == "/estado":
             return self._envia(ler(), "application/json")
         if p == "/eventos":  # Server-Sent Events: empurra o estado a cada mudança

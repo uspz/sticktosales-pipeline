@@ -20,11 +20,12 @@ from contextlib import contextmanager
 DIR = os.path.dirname(os.path.abspath(__file__))
 ESTADO = os.path.join(DIR, "estado.json")
 TAREFAS = os.path.join(DIR, "tarefas")
-AGENTES = ["aria", "enxuto", "analista", "metricas", "roteirista",
-           "programador", "editor", "revisor", "postador", "administrador"]
+AGENTES = ["aria", "enxuto", "analista", "crescimento", "metricas", "roteirista", "conteudo",
+           "programador", "editor", "revisor", "juridico", "postador", "administrador"]
 # subagentes nativos do Claude Code → setor mais parecido
 APELIDOS = {"explore": "analista", "plan": "analista", "general-purpose": "programador",
-            "claude": "programador", "fork": "aria"}
+            "claude": "programador", "fork": "aria",
+            "advogado": "juridico", "diretor-conteudo": "conteudo", "growth": "crescimento"}
 MAX_EVENTOS = 300
 
 
@@ -198,8 +199,13 @@ def demo():
         ("inicio", "enxuto", "encurtando plano e briefings"), ("tokens", "enxuto", 1840),
         ("fim", "enxuto", "-42% no plano"),
         ("inicio", "metricas", "puxando Metricool 7 dias"), ("fim", "metricas", "lucro é o tema campeão"),
+        ("inicio", "crescimento", "tema tem potencial?"), ("fim", "crescimento", "potencial alto + 1 teste"),
         ("inicio", "roteirista", "roteiro PT 140 palavras"), ("fim", "roteirista", "roteiro + 3 ganchos"),
+        ("inicio", "conteudo", "nota do roteiro"), ("devolve", "conteudo", "gancho 5/10: abrir com a conta"),
+        ("inicio", "roteirista", "novo gancho"), ("fim", "roteirista", "gancho com a conta"),
+        ("inicio", "conteudo", "nota de novo"), ("fim", "conteudo", "média 8,4"),
         ("inicio", "revisor", "conferindo roteiro"), ("fim", "revisor", "ok, 140 palavras"),
+        ("inicio", "juridico", "promessa de ganho?"), ("fim", "juridico", "sem risco relevante"),
         ("inicio", "editor", "render aula + cortes"), ("fim", "editor", "3 mp4 prontos"),
         ("inicio", "revisor", "LUFS, frames, voz no 1º s"),
         ("devolve", "revisor", "pico em −0,1 dB no corte 2"),

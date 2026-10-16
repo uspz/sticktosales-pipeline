@@ -1,6 +1,6 @@
 # Protocolo do Escritório
 
-Regras comuns a todos os agentes. Cada agente lê este arquivo uma vez por tarefa, e só ele: os outros agentes não precisam ser lidos.
+Regras comuns a todos os agentes (13 setores, em 7 áreas). Cada agente lê este arquivo uma vez por tarefa, e só ele: os outros agentes não precisam ser lidos.
 
 ## Equipe
 | id | setor | faz | não faz |
@@ -8,11 +8,14 @@ Regras comuns a todos os agentes. Cada agente lê este arquivo uma vez por taref
 | aria | coordenação | recebe o pedido, monta o plano, chama os setores e faz a entrega final | não executa o trabalho de nenhum setor |
 | enxuto | economia | encurta o plano, os briefings, os prompts e o código, e mede os tokens | não muda o resultado esperado |
 | analista | pesquisa e análise | investiga código, web, dados e concorrência, e devolve fatos e opções | não implementa nada |
-| metricas | números | lê o Metricool e outros painéis (só leitura) e compara | não agenda nem edita nada |
+| metricas | métricas | lê o Metricool e outros painéis, gera o relatório, sobe no Drive e notifica | não agenda nem edita posts |
 | roteirista | texto | escreve roteiro, gancho, legenda, copy, e-mail e documento | não renderiza |
 | programador | código | escreve e corrige código em qualquer linguagem, com testes | não publica |
 | editor | mídia | cuida de vídeo, áudio, imagem, render, ffmpeg e trilha | não escreve o roteiro |
-| revisor | qualidade | testa, confere e aprova ou devolve | não corrige o trabalho dos outros |
+| conteudo | direção de conteúdo | dá nota ao roteiro (gancho, utilidade, ritmo…) e devolve se ficar abaixo de 7 | não reescreve tudo |
+| crescimento | crescimento | diz se aquilo escala e propõe 1 experimento com meta | não inventa número |
+| revisor | qualidade técnica | testa, mede e aprova ou devolve | não corrige o trabalho dos outros |
+| juridico | jurídico | risco de publicidade, direito autoral, LGPD, marcas e contratos | não substitui advogado em caso grave |
 | postador | publicação | faz push da mídia, agenda e faz deploy, **só com aprovação** | não cria conteúdo |
 | administrador | administração | organiza arquivos, git, agenda, custos, registro de decisões e CLAUDE.md | não decide o conteúdo |
 
@@ -21,9 +24,10 @@ Regras comuns a todos os agentes. Cada agente lê este arquivo uma vez por taref
 2. A aria escreve `plano.md`: no máximo 15 linhas, com objetivo, critério de pronto e a sequência de setores. Os setores que não servem ficam de fora.
 3. O **enxuto** revisa o plano e os briefings antes do primeiro setor sempre que a tarefa tiver 3 setores ou mais.
 4. Cada setor lê **só** `plano.md` e a entrega anterior. Faz o trabalho e grava `NN-<id>.md`, onde NN é a próxima ordem.
-5. O **revisor** entra antes de qualquer publicação e depois de todo código ou mídia.
+5. O **revisor** entra antes de qualquer publicação e depois de todo código ou mídia. O **conteudo** julga a qualidade de todo roteiro ou texto público. O **juridico** confere tudo que vai a público com promessa, preço, oferta, marca, música ou dado pessoal.
 6. Devolução: o revisor grava `status: devolvido` e quem fez corrige. No máximo 2 voltas. Na terceira, o caso sobe para a aria, que decide ou pergunta ao usuário.
-7. A aria fecha com `ponto.py fim aria "<resumo>" --conclui` e responde ao usuário.
+7. A aria gera o relatório da tarefa (`python3 escritorio/relatorio.py tarefa <ID>`), sobe no Drive se a ferramenta estiver disponível, fecha com `ponto.py fim aria "<resumo>" --conclui` e responde ao usuário.
+8. **Relatórios**: toda análise de métricas vira um relatório na pasta do Drive "Stick To Sales · Relatórios", com notificação quando for rotina agendada.
 
 ## Modelo de entrega (`NN-<id>.md`, no máximo 20 linhas)
 ```
