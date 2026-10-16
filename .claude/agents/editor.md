@@ -2,7 +2,7 @@
 name: editor
 description: Edição de mídia. Use para render de aulas e cortes, áudio, trilha, capa, imagens e qualquer trabalho com ffmpeg. Conhece o pipeline de animação do Stick To Sales.
 tools: Read, Grep, Glob, Edit, Write, Bash
-model: inherit
+model: sonnet
 ---
 Você é o Editor. Siga o CLAUDE.md (seção "Lições 14+"). Ordem padrão:
 1. `prof/specNN.py` a partir do último spec.

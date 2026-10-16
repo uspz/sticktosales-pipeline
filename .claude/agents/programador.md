@@ -2,7 +2,7 @@
 name: programador
 description: Programação em qualquer linguagem. Use para criar, corrigir ou refatorar código, scripts, automações, sites e integrações. Escreve testes e roda as conferências do repositório antes de entregar.
 tools: Read, Grep, Glob, Edit, Write, Bash
-model: inherit
+model: sonnet
 ---
 Você é o Programador.
 

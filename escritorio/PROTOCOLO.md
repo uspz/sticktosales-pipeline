@@ -2,6 +2,15 @@
 
 Regras comuns a todos os agentes (17 pessoas em 8 áreas). Cada agente lê este arquivo uma vez por tarefa, e só ele: os outros agentes não precisam ser lidos.
 
+## Modo econômico (padrão, vale acima de tudo)
+O limite de uso só renova uma vez por semana. Cada token conta.
+1. **Fazer primeiro, analisar só se der erro.** Nada de análise, pesquisa ou leitura do repositório antes de começar. Quando algo falhar, investigue só o erro: a mensagem e o trecho que ela aponta.
+2. **Menos agentes.** Tarefa pequena (1 arquivo, 1 texto, 1 consulta): a Aria faz direto, sem abrir tarefa. Só chame setores quando a tarefa tiver mais de uma etapa de verdade. Enxuto, instrutor, crescimento e analista só entram quando o Ninety pedir ou quando houver erro repetido.
+3. **Conferir sem gastar.** O revisor roda o teste ou o comando de conferência e lê só o resultado; não relê tudo. Conteúdo e jurídico entram só no que vai ser publicado.
+4. **Ler pouco.** Use `rg` e `sed -n` em trechos; nunca abra arquivo inteiro sem necessidade. Nunca releia o que já está no contexto.
+5. **Escrever pouco.** Código mínimo, sem comentários óbvios. Respostas e entregas curtas: o resultado e o que falta.
+6. **Sem rotinas caras.** Nada de tarefa agendada de hora em hora: no máximo 1 relatório por dia, e só se o Ninety quiser.
+
 ## Equipe
 | id | setor | faz | não faz |
 |---|---|---|---|
@@ -49,10 +58,10 @@ Conflito entre setores: decide o supervisor da área; se não resolver, a Aria. 
 ## Fluxo
 1. A **aria** cria a tarefa com `python3 escritorio/ponto.py tarefa "<título>"`. O comando devolve um ID (`T-...`) e a pasta `escritorio/tarefas/<ID>/`.
 2. A aria escreve `plano.md`: no máximo 15 linhas, com objetivo, critério de pronto e a sequência de setores. Os setores que não servem ficam de fora.
-3. O **enxuto** revisa o plano e os briefings antes do primeiro setor sempre que a tarefa tiver 3 setores ou mais.
+3. (Modo econômico) Sem passagem obrigatória pelo enxuto; ele só entra a pedido.
 4. Cada setor lê **só** `plano.md` e a entrega anterior. Faz o trabalho e grava `NN-<id>.md`, onde NN é a próxima ordem.
 5. O **revisor** entra antes de qualquer publicação e depois de todo código ou mídia. O **conteudo** julga a qualidade de todo roteiro ou texto público. O **juridico** confere tudo que vai a público com promessa, preço, oferta, marca, música ou dado pessoal.
-6. Devolução: o revisor grava `status: devolvido` e quem fez corrige. No máximo 2 voltas. Na terceira, o caso sobe para o supervisor da área e depois para a aria, que decide ou pergunta ao usuário. Toda devolução vira lição: o **instrutor** registra com `ponto.py ensina instrutor <setor> "<regra>"`, que grava em `escritorio/licoes.md`. Antes dos briefings, a aria pede ao instrutor as lições que valem para a tarefa.
+6. Devolução: o revisor grava `status: devolvido` e quem fez corrige. No máximo 2 voltas. Na terceira, o caso sobe para o supervisor da área e depois para a aria, que decide ou pergunta ao usuário. Toda devolução vira lição: o **instrutor** registra com `ponto.py ensina instrutor <setor> "<regra>"`, que grava em `escritorio/licoes.md`. Antes dos briefings, a aria faz `rg` em `licoes.md` pelo setor, sem chamar o instrutor.
 7. A aria gera o relatório da tarefa (`python3 escritorio/relatorio.py tarefa <ID>`), sobe no Drive se a ferramenta estiver disponível, fecha com `ponto.py fim aria "<resumo>" --conclui` e responde ao usuário.
 8. **Relatórios**: toda análise de métricas vira um relatório na pasta do Drive "Stick To Sales · Relatórios", com notificação quando for rotina agendada.
 

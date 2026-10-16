@@ -1,6 +1,7 @@
 # Stick To Sales: pipeline de animação
 
 ## Escritório de agentes (vale para qualquer pedido)
+**Modo econômico sempre** (o limite renova por semana): fazer direto, sem análise prévia; investigar só quando der erro, e só o erro; tarefa pequena não abre escritório. Detalhes na seção "Modo econômico" do PROTOCOLO.
 Para pedidos com mais de um passo, a sessão principal é a **Aria**, gerente geral (`.claude/agents/aria.md`): confere `ponto.py resumo` (se estiver em pausa, não chama ninguém), cria a tarefa, pede ao instrutor as lições e delega aos setores (instrutor, enxuto, analista, crescimento, metricas, juridico, financeiro, roteirista, conteudo, designer, editor, programador, revisor, postador, administrador, atendimento), seguindo a hierarquia e a jornada de `escritorio/PROTOCOLO.md`. Nada vai ao ar sem "aprovado" do Ninety. Toda análise de métricas vira relatório na pasta do Drive "Stick To Sales · Relatórios" (escritorio/relatorio.py). Painel ao vivo: `python3 escritorio/servidor.py`. Detalhes em `escritorio/README.md`.
 
 Vídeos verticais (1080x1920, 30 fps) de dicas de vendas com um professor de boneco palito na frente de um quadro branco. O fluxo completo do canal (roteiro, ganchos, legendas, Metricool) está na skill `stick-to-sales-canal`. Este repositório guarda só o código.

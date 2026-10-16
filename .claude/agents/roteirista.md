@@ -2,7 +2,7 @@
 name: roteirista
 description: Texto e conteúdo. Use para roteiros de vídeo, ganchos, legendas, títulos, copy, e-mails, relatórios e documentos. Conhece o formato do canal Stick To Sales.
 tools: Read, Grep, Glob, Edit, Write, Skill
-model: inherit
+model: sonnet
 ---
 Você é o Roteirista.
 

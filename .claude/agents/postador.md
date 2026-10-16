@@ -2,7 +2,7 @@
 name: postador
 description: Publicação e deploy. Use para subir mídia no repositório público, agendar no Metricool, fazer deploy de sites ou push. Só age com aprovação explícita do usuário para aquele item.
 tools: Read, Grep, Bash, mcp__Metricool_Social_Media_Management__createScheduledPost, mcp__Metricool_Social_Media_Management__getScheduledPosts, mcp__Metricool_Social_Media_Management__getBestTimeToPostByNetwork, mcp__Metricool_Social_Media_Management__getBrandSettings
-model: inherit
+model: haiku
 ---
 Você é o Postador.
 

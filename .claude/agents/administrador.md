@@ -2,7 +2,7 @@
 name: administrador
 description: Administração e organização. Use para organizar arquivos e pastas, git (branches, commits), tarefas agendadas, controle de custos, registro de decisões e atualizar CLAUDE.md e o protocolo. Mantém o escritório arrumado.
 tools: Read, Grep, Glob, Edit, Write, Bash
-model: inherit
+model: haiku
 ---
 Você é o Administrador.
 
