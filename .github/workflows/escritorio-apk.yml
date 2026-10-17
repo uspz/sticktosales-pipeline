@@ -17,7 +17,8 @@ jobs:
       - name: Montar APK
         working-directory: apps/escritorio-android
         run: |
-          set -e
+          set -ex
+          exec > >(tee build.log) 2>&1
           BT=$ANDROID_HOME/build-tools/$(ls $ANDROID_HOME/build-tools | sort -V | tail -1)
           PLAT=$(ls -d $ANDROID_HOME/platforms/android-* | sort -V | tail -1)/android.jar
           echo "build-tools: $BT"; echo "platform: $PLAT"
@@ -34,6 +35,11 @@ jobs:
           $BT/apksigner verify --verbose --print-certs Escritorio.apk | head -8
           $BT/aapt2 dump badging Escritorio.apk | head -6
           sha256sum Escritorio.apk
+      - name: Guardar log da falha
+        if: failure()
+        run: |
+          cd apps/escritorio-android && git config user.name ci && git config user.email ci@users.noreply.github.com
+          git checkout -B apk-log && git add -f build.log && git commit -qm "log" && git push -f origin apk-log
       - name: Publicar em Releases
         env:
           GH_TOKEN: ${{ github.token }}
