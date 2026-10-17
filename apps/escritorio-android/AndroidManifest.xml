@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.sticktosales.escritorio">
+  <uses-permission android:name="android.permission.INTERNET"/>
+  <queries>
+    <intent><action android:name="android.support.customtabs.action.CustomTabsService"/></intent>
+    <package android:name="com.android.chrome"/>
+    <package android:name="com.chrome.beta"/>
+    <package android:name="com.sec.android.app.sbrowser"/>
+    <package android:name="com.brave.browser"/>
+    <package android:name="com.microsoft.emmx"/>
+  </queries>
+  <application android:label="Escritório" android:icon="@mipmap/ic_launcher" android:theme="@style/App" android:allowBackup="false">
+    <activity android:name=".MainActivity" android:exported="true" android:launchMode="singleTask" android:screenOrientation="unspecified">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN"/>
+        <category android:name="android.intent.category.LAUNCHER"/>
+      </intent-filter>
+    </activity>
+  </application>
+</manifest>

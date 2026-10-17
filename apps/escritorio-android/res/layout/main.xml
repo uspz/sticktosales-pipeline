@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:gravity="center" android:padding="28dp" android:background="@color/bg">
+  <ImageView android:layout_width="96dp" android:layout_height="96dp" android:src="@mipmap/ic_launcher" android:contentDescription="@null"/>
+  <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="18dp"
+      android:text="Escritório" android:textColor="@color/ink" android:textSize="30sp" android:textStyle="bold"/>
+  <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp"
+      android:text="Stick To Sales · central de agentes" android:textColor="@color/acc" android:textSize="14sp"/>
+  <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="22dp" android:gravity="center"
+      android:text="Abre no Chrome com o seu login do Claude. Se pedir para entrar, entre uma vez e pronto." android:textColor="@color/muted" android:textSize="15sp"/>
+  <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="26dp"
+      android:onClick="reabrir" android:text="Abrir o escritório" android:textAllCaps="false" android:textSize="17sp"
+      android:textColor="@color/bg" android:backgroundTint="@color/acc" android:paddingLeft="28dp" android:paddingRight="28dp"/>
+  <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="6dp"
+      android:onClick="sair" android:text="Fechar" android:textAllCaps="false" android:textColor="@color/muted"
+      style="?android:attr/borderlessButtonStyle"/>
+</LinearLayout>
