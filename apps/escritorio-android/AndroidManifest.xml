@@ -8,6 +8,9 @@
     <package android:name="com.sec.android.app.sbrowser"/>
     <package android:name="com.brave.browser"/>
     <package android:name="com.microsoft.emmx"/>
+    <package android:name="com.zhiliaoapp.musically"/>
+    <package android:name="com.ss.android.ugc.trill"/>
+    <intent><action android:name="android.intent.action.SEND"/><data android:mimeType="video/*"/></intent>
   </queries>
   <application android:label="Escritório" android:icon="@mipmap/ic_launcher" android:theme="@style/App" android:allowBackup="false">
     <activity android:name=".MainActivity" android:exported="true" android:launchMode="singleTask" android:screenOrientation="unspecified">
@@ -16,5 +19,6 @@
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
     </activity>
+    <provider android:name=".Videos" android:authorities="com.sticktosales.escritorio.videos" android:exported="false" android:grantUriPermissions="true"/>
   </application>
 </manifest>

@@ -4,6 +4,7 @@
   <color name="ink">#E7EEF2</color>
   <color name="muted">#94A4AE</color>
   <color name="acc">#38C9A5</color>
+  <color name="card">#1B2730</color>
   <style name="App" parent="android:Theme.Material.NoActionBar">
     <item name="android:windowBackground">@color/bg</item>
     <item name="android:statusBarColor">@color/bg</item>

@@ -1,18 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:orientation="vertical" android:gravity="center" android:padding="28dp" android:background="@color/bg">
-  <ImageView android:layout_width="96dp" android:layout_height="96dp" android:src="@mipmap/ic_launcher" android:contentDescription="@null"/>
-  <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="18dp"
-      android:text="Escritório" android:textColor="@color/ink" android:textSize="30sp" android:textStyle="bold"/>
-  <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp"
-      android:text="Stick To Sales · central de agentes" android:textColor="@color/acc" android:textSize="14sp"/>
-  <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="22dp" android:gravity="center"
-      android:text="Abre no Chrome com o seu login do Claude. Se pedir para entrar, entre uma vez e pronto." android:textColor="@color/muted" android:textSize="15sp"/>
-  <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="26dp"
-      android:onClick="reabrir" android:text="Abrir o escritório" android:textAllCaps="false" android:textSize="17sp"
-      android:textColor="@color/bg" android:backgroundTint="@color/acc" android:paddingLeft="28dp" android:paddingRight="28dp"/>
-  <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="6dp"
-      android:onClick="sair" android:text="Fechar" android:textAllCaps="false" android:textColor="@color/muted"
-      style="?android:attr/borderlessButtonStyle"/>
-</LinearLayout>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent" android:background="@color/bg" android:fillViewport="true">
+  <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:gravity="center_horizontal" android:padding="24dp">
+    <ImageView android:layout_width="72dp" android:layout_height="72dp" android:layout_marginTop="12dp" android:src="@mipmap/ic_launcher" android:contentDescription="@null"/>
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp"
+        android:text="Escritório" android:textColor="@color/ink" android:textSize="28sp" android:textStyle="bold"/>
+    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="Stick To Sales · central de agentes" android:textColor="@color/acc" android:textSize="14sp"/>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical"
+        android:layout_marginTop="24dp" android:padding="18dp" android:background="@color/card">
+      <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+          android:text="PRÓXIMO NO TIKTOK" android:textColor="@color/muted" android:textSize="12sp" android:letterSpacing="0.08"/>
+      <TextView android:id="@+id/titulo" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="6dp"
+          android:text="…" android:textColor="@color/ink" android:textSize="20sp" android:textStyle="bold"/>
+      <TextView android:id="@+id/quando" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp"
+          android:textColor="@color/acc" android:textSize="14sp"/>
+      <TextView android:id="@+id/resto" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="2dp"
+          android:textColor="@color/muted" android:textSize="13sp"/>
+      <Button android:id="@+id/postar" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="14dp"
+          android:onClick="postar" android:text="Postar no TikTok" android:textAllCaps="false" android:textSize="17sp"
+          android:textColor="@color/bg" android:backgroundTint="@color/acc"/>
+      <Button android:id="@+id/feito" android:layout_width="match_parent" android:layout_height="wrap_content"
+          android:onClick="feito" android:text="Já postei, mostrar o próximo" android:textAllCaps="false" android:textColor="@color/ink"
+          style="?android:attr/borderlessButtonStyle"/>
+      <TextView android:id="@+id/status" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="4dp"
+          android:textColor="@color/muted" android:textSize="13sp"/>
+    </LinearLayout>
+    <Button android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="18dp"
+        android:onClick="reabrir" android:text="Abrir o escritório" android:textAllCaps="false" android:textSize="16sp"
+        android:textColor="@color/ink" android:backgroundTint="@color/card"/>
+    <Button android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp"
+        android:onClick="atualizar" android:text="Atualizar fila" android:textAllCaps="false" android:textColor="@color/muted"
+        style="?android:attr/borderlessButtonStyle"/>
+  </LinearLayout>
+</ScrollView>
