@@ -1,6 +1,8 @@
 """Motor genérico de lições: cada lição é um arquivo specNN.py curto (MARKED, TITLES, ITEMS, HOOK...).
 uso: python3 lessongen.py stills <NN> saida.png t1,t2,... (usa alinhamentos/alNN_pt.json)
-O render (aula e cortes) é feito pelo cuts.py: python3 cuts.py render NN PT <aula|dicas|exemplo> saida.mp4
+O render (aula e cortes) é feito pelo cuts.py: python3 cuts.py render NN PT <aula|dicas|exemplo> saida.mp4 [--loop]
+Conferir o final em loop: python3 lessongen.py loop <NN> <aula|dicas|exemplo> saida.png
+  (folha com o 1º frame, o início da volta e o último frame, e a diferença entre o 1º e o último)
 """
 import sys, json, math, re, importlib, os
 from cairoc import Canvas
@@ -268,6 +270,26 @@ class Lesson:
         B.draw_captions(c, pf, t)
 
 
+# ------------------------------------------------------------------ final em loop
+LOOP_DUR = 1.0   # segundos finais em que o vídeo volta ao primeiro frame (pose, câmera e gancho)
+
+
+def loop_k(i, n, fps=FPS, loop_dur=LOOP_DUR):
+    """Peso do primeiro frame no frame i de um corte com n frames: 0 até o último segundo,
+    sobe suave e chega a 1 exatamente no último frame (i = n - 1)."""
+    lf = max(1, int(round(loop_dur * fps)))
+    return sstep((i - (n - 1 - lf)) / lf)
+
+
+def loop_blend(cur, first, k):
+    """Mistura o frame atual (HxWx4 uint8) com o primeiro frame do corte. k=1 devolve o primeiro frame."""
+    import numpy as np
+    if k <= 0: return cur
+    if k >= 1: return first
+    out = cur.astype(np.float32) * (1 - k) + first.astype(np.float32) * k
+    return (out + 0.5).astype(np.uint8)
+
+
 def it_dur(it):
     return DUR[it[0]]
 
@@ -283,7 +305,11 @@ def module_for(n):
 
 
 if __name__ == '__main__':
-    if sys.argv[1] == 'stills':
+    if sys.argv[1] == 'loop':
+        import cuts
+        n, cut, out = int(sys.argv[2]), sys.argv[3], sys.argv[4]
+        cuts.loop_sheet(n, 'PT', cut, out)
+    elif sys.argv[1] == 'stills':
         n = int(sys.argv[2]); out = sys.argv[3]; times = [float(x) for x in sys.argv[4].split(',')]
         root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         al = json.load(open(f'{root}/alinhamentos/al{n}_pt.json'))

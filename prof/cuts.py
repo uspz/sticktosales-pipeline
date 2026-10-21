@@ -2,6 +2,8 @@
 uso:
   python3 cuts.py still <lesson> <EN|PT> <cut_id> <saida.png> <t_rel1,t_rel2,...>
   python3 cuts.py render <lesson> <EN|PT> <cut_id> <saida.mp4>
+  --loop (em still ou render): o último segundo volta ao primeiro frame (mesma pose, enquadramento e gancho),
+         e o cartão final sai 1 s antes para não ficar mais de 3 s parado no fim.
 """
 import sys, json, math, subprocess, importlib, os
 from cairoc import Canvas
@@ -103,10 +105,12 @@ def draw_hook(c, txt, tr):
         c.pop_paint(k)
 
 
-def draw_endcard(c, txt, tr, dur):
-    t0 = dur - 2.6
+def draw_endcard(c, txt, tr, dur, gap=0.0):
+    """gap: segundos livres no fim (o trecho do loop); o cartão sai antes dele."""
+    t0 = dur - 2.6 - gap
     if not txt or tr < t0: return
-    k = sstep((tr - t0) / 0.3)
+    k = sstep((tr - t0) / 0.3) * (1 - sstep((tr - (dur - gap)) / 0.25) if gap > 0 else 1.0)
+    if k <= 0: return
     pop = 1.0 + 0.12 * math.sin(math.pi * clamp((tr - t0) / 0.35, 0, 1))
     c.save(); c.translate(W / 2, 1805); c.scale(pop, pop)
     c.font('Poppins', 46, True); w = c.extents(txt).x_advance
@@ -131,17 +135,67 @@ def setup(n, lang, cut):
     return mod, al, pf, poses, a, b, blocks_mod
 
 
-def frame(c, mod, pf, poses, f, blocks_mod, L, end, a, b, hook, endtxt):
+def frame(c, mod, pf, poses, f, blocks_mod, L, end, a, b, hook, endtxt, gap=0.0):
     t = f / FPS
     mod.render_frame(c, pf, poses, f, blocks_mod, L, end)
     tr = t - a
     c.color('#E0E0E0'); c.rect(0, 0, W, 12); c.fill()
     c.color('#000000'); c.rect(0, 0, W * clamp(tr / (b - a), 0, 1), 12); c.fill()
     draw_hook(c, hook, tr)
-    draw_endcard(c, endtxt, tr, b - a)
+    draw_endcard(c, endtxt, tr, b - a, gap)
+
+
+def frame_px(c):
+    import numpy as np
+    return np.frombuffer(c.bgr0_bytes(), np.uint8).reshape(H, W, 4)
+
+
+class Looper:
+    """Guarda o 1º frame do corte e mistura o último segundo de volta nele."""
+    def __init__(self, c, mod, pf, poses, fa, fb, blocks_mod, L, end, a, b, hook, endtxt):
+        from lessongen import LOOP_DUR
+        self.fa, self.n, self.gap = fa, fb - fa, LOOP_DUR
+        frame(c, mod, pf, poses, fa, blocks_mod, L, end, a, b, hook, endtxt, self.gap)
+        self.first = frame_px(c).copy()
+
+    def px(self, c, f):
+        from lessongen import loop_k, loop_blend
+        return loop_blend(frame_px(c), self.first, loop_k(f - self.fa, self.n))
+
+
+def cut_frames(a, b):
+    return int(round(a * FPS)), int(round(b * FPS))
+
+
+def loop_sheet(n, lang, cut, out):
+    """Folha de conferência do loop: 1º frame, início da volta, meio da volta e último frame."""
+    import numpy as np
+    from PIL import Image
+    from lessongen import LOOP_DUR
+    mod, al, pf, poses, a, b, blocks_mod = setup(n, lang, cut)
+    hook = mod.HOOK if cut == 'aula' else mod.CUT_HOOKS[cut]
+    endtxt = '' if cut == 'aula' else ENDCARD[lang]
+    c = Canvas(W, H); fa, fb = cut_frames(a, b)
+    lp = Looper(c, mod, pf, poses, fa, fb, blocks_mod, mod.TXT[lang], al['end'], a, b, hook, endtxt)
+    lf = int(round(LOOP_DUR * FPS))
+    fs = [fa, fb - 1 - lf - int(2.6 * FPS), fb - 1 - lf, fb - 1 - lf // 2, fb - 1]
+    ims, last = [], None
+    for f in fs:
+        frame(c, mod, pf, poses, f, blocks_mod, mod.TXT[lang], al['end'], a, b, hook, endtxt, lp.gap)
+        px = lp.px(c, f); last = px
+        ims.append(Image.fromarray(px[:, :, 2::-1].copy()).resize((360, 640)))
+    sheet = Image.new('RGB', (len(ims) * 364, 644), 'gray')
+    for i, im in enumerate(ims): sheet.paste(im, (i * 364, 0))
+    sheet.save(out)
+    diff = int(np.abs(last[:, :, :3].astype(int) - lp.first[:, :, :3].astype(int)).max())
+    print('loop', n, cut, 'frames', fb - fa, 'dur', round((fb - fa) / FPS, 2), 'diff 1o x ultimo', diff,
+          'tempos', [round((f - fa) / FPS, 2) for f in fs])
+    return diff
 
 
 def main():
+    loop = '--loop' in sys.argv
+    if loop: sys.argv.remove('--loop')
     mode, n, lang, cut = sys.argv[1], int(sys.argv[2]), sys.argv[3], sys.argv[4]
     mod, al, pf, poses, a, b, blocks_mod = setup(n, lang, cut)
     L = mod.TXT[lang]
@@ -149,14 +203,18 @@ def main():
     else: hook = HOOKS[n][cut][lang]
     endtxt = '' if cut == 'aula' else ENDCARD[lang]
     c = Canvas(W, H)
+    fa, fb = cut_frames(a, b)
+    lp = Looper(c, mod, pf, poses, fa, fb, blocks_mod, L, al['end'], a, b, hook, endtxt) if loop else None
+    gap = lp.gap if lp else 0.0
     if mode == 'still':
         from PIL import Image
         out = sys.argv[5]; times = [float(x) for x in sys.argv[6].split(',')]
         ims = []
         for tr in times:
-            f = int((a + tr) * FPS)
-            frame(c, mod, pf, poses, f, blocks_mod, L, al['end'], a, b, hook, endtxt)
-            ims.append(Image.fromarray(c.rgb()).resize((360, 640)))
+            f = min(fb - 1, int((a + tr) * FPS))
+            frame(c, mod, pf, poses, f, blocks_mod, L, al['end'], a, b, hook, endtxt, gap)
+            rgb = lp.px(c, f)[:, :, 2::-1].copy() if lp else c.rgb()
+            ims.append(Image.fromarray(rgb).resize((360, 640)))
         cols = min(5, len(ims)); rows = (len(ims) + cols - 1) // cols
         sheet = Image.new('RGB', (cols * 364, rows * 644), 'gray')
         for i, im in enumerate(ims): sheet.paste(im, ((i % cols) * 364, (i // cols) * 644))
@@ -164,7 +222,6 @@ def main():
         print('cut', n, lang, cut, round(a, 2), round(b, 2), 'dur', round(b - a, 2))
     else:
         outp = sys.argv[5]
-        fa, fb = int(round(a * FPS)), int(round(b * FPS))
         dur = (fb - fa) / FPS
         ff = subprocess.Popen(['ffmpeg', '-y', '-loglevel', 'error', '-f', 'rawvideo', '-pix_fmt', 'bgr0', '-s', f'{W}x{H}',
                                '-r', str(FPS), '-i', '-', '-ss', f'{fa / FPS:.3f}', '-t', f'{dur:.3f}', '-i', al['audio'],
@@ -173,8 +230,8 @@ def main():
                                '-af', f'afade=t=in:d=0.04,afade=t=out:st={max(0, dur - 0.3):.3f}:d=0.3,apad,loudnorm=I=-14:TP=-1.5:LRA=11',
                                '-c:a', 'aac', '-b:a', '192k', '-t', f'{dur:.3f}', outp], stdin=subprocess.PIPE)
         for f in range(fa, fb):
-            frame(c, mod, pf, poses, f, blocks_mod, L, al['end'], a, b, hook, endtxt)
-            ff.stdin.write(c.bgr0_bytes())
+            frame(c, mod, pf, poses, f, blocks_mod, L, al['end'], a, b, hook, endtxt, gap)
+            ff.stdin.write(lp.px(c, f).tobytes() if lp else c.bgr0_bytes())
         ff.stdin.close(); ff.wait()
         print('ok', outp, round(dur, 2))
 
