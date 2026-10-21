@@ -19,6 +19,7 @@ Vídeos verticais (1080x1920, 30 fps) de dicas de vendas com um professor de bon
 - Cada lição é um `prof/specNN.py` curto: HOOK, CUT_HOOKS, CAP, HT, TITLES, MARKED (texto idêntico ao roteiro + marcas), ITEMS (tipos: t, bar, big, strike, check, bub, stamp, follow, x, ok, arrow, icon) e GROUPS opcional. O motor é `prof/lessongen.py`.
 - Conferir: `python3 lessongen.py stills NN saida.png t1,t2,...` (usa `alinhamentos/alNN_pt.json`).
 - Render: `python3 cuts.py render NN PT <aula|dicas|exemplo> saida.mp4` (a aula abre com o gancho na tela) e depois `add_music.sh` revezando as trilhas.
+- Final em loop: acrescente `--loop` ao render (ou ao still). O último segundo volta ao primeiro frame (pose, enquadramento e gancho) e o cartão final sai 1 s antes. Conferir com `python3 lessongen.py loop NN <aula|dicas|exemplo> saida.png` (mostra 1º frame, a volta e o último frame; "diff 1o x ultimo" tem que dar 0).
 - Mídia: copiar para `uspz/sticktosales-midia/loteN/` (repo público) e agendar no Metricool com a URL raw, um post por vídeo com tiktok+instagram+youtube.
 
 ## Conferência antes de publicar
